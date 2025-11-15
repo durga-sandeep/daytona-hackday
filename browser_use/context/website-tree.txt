@@ -50,3 +50,236 @@ Global Components:
 🧩 Product Card
    Description: Reusable product card component displaying product image, category, name, and price
    Appears On: men, women
+
+
+Website Navigation Network Graph:
+--------------------------------------------------------------------------------
+
+📄 LOGIN PAGE (/login)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Available Actions:                                          │
+   │                                                             │
+   │  [Username Input] → Type username (e.g., "admin")          │
+   │  [Password Input] → Type password (e.g., "admin")          │
+   │  [Sign In Button] → Click → Navigate to HOME PAGE (/)      │
+   │                                                             │
+   │  Connections:                                               │
+   │    Sign In (success) → /                                    │
+   │    Sign In (failure) → Stay on /login (show error)         │
+   └─────────────────────────────────────────────────────────────┘
+
+
+📄 HOME PAGE (/)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Available Actions:                                          │
+   │                                                             │
+   │  Navigation Bar (top):                                       │
+   │    [Logo "LUXE"] → Click → Stay on / (refresh)             │
+   │    [Men Link] → Click → Navigate to /men                   │
+   │    [Women Link] → Click → Navigate to /women               │
+   │    [Logout Button] → Click → Navigate to /login             │
+   │                                                             │
+   │  Hero Section:                                              │
+   │    [Shop Men Button] → Click → Navigate to /men           │
+   │    [Shop Women Button] → Click → Navigate to /women        │
+   │                                                             │
+   │  Chat Assistant (bottom-right):                             │
+   │    [Chat Icon Button] → Click → Open Chat Widget          │
+   │                                                             │
+   │  Connections:                                               │
+   │    → /men (via Men link or Shop Men button)                │
+   │    → /women (via Women link or Shop Women button)          │
+   │    → /login (via Logout button)                            │
+   │    → Chat Widget (overlay, stays on /)                     │
+   └─────────────────────────────────────────────────────────────┘
+
+
+📄 MEN'S COLLECTION PAGE (/men)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Available Actions:                                          │
+   │                                                             │
+   │  Navigation Bar (top):                                       │
+   │    [Logo "LUXE"] → Click → Navigate to /                   │
+   │    [Men Link] → Click → Stay on /men (refresh)             │
+   │    [Women Link] → Click → Navigate to /women               │
+   │    [Logout Button] → Click → Navigate to /login             │
+   │                                                             │
+   │  Product Grid (6 products):                                  │
+   │    [Product Card 1] → Hover effect (no click action)       │
+   │    [Product Card 2] → Hover effect (no click action)        │
+   │    [Product Card 3] → Hover effect (no click action)       │
+   │    [Product Card 4] → Hover effect (no click action)       │
+   │    [Product Card 5] → Hover effect (no click action)       │
+   │    [Product Card 6] → Hover effect (no click action)       │
+   │                                                             │
+   │  Chat Assistant (bottom-right):                             │
+   │    [Chat Icon Button] → Click → Open Chat Widget           │
+   │                                                             │
+   │  Connections:                                               │
+   │    → / (via Logo click)                                    │
+   │    → /women (via Women link)                               │
+   │    → /login (via Logout button)                            │
+   │    → Chat Widget (overlay, stays on /men)                  │
+   └─────────────────────────────────────────────────────────────┘
+
+
+📄 WOMEN'S COLLECTION PAGE (/women)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Available Actions:                                          │
+   │                                                             │
+   │  Navigation Bar (top):                                       │
+   │    [Logo "LUXE"] → Click → Navigate to /                   │
+   │    [Men Link] → Click → Navigate to /men                   │
+   │    [Women Link] → Click → Stay on /women (refresh)         │
+   │    [Logout Button] → Click → Navigate to /login            │
+   │                                                             │
+   │  Product Grid (6 products):                                  │
+   │    [Product Card 1] → Hover effect (no click action)       │
+   │    [Product Card 2] → Hover effect (no click action)       │
+   │    [Product Card 3] → Hover effect (no click action)       │
+   │    [Product Card 4] → Hover effect (no click action)       │
+   │    [Product Card 5] → Hover effect (no click action)       │
+   │    [Product Card 6] → Hover effect (no click action)       │
+   │                                                             │
+   │  Chat Assistant (bottom-right):                             │
+   │    [Chat Icon Button] → Click → Open Chat Widget           │
+   │                                                             │
+   │  Connections:                                               │
+   │    → / (via Logo click)                                    │
+   │    → /men (via Men link)                                   │
+   │    → /login (via Logout button)                            │
+   │    → Chat Widget (overlay, stays on /women)                │
+   └─────────────────────────────────────────────────────────────┘
+
+
+💬 CHAT ASSISTANT WIDGET (Overlay on /, /men, /women)
+   ┌─────────────────────────────────────────────────────────────┐
+   │ State: CLOSED                                                │
+   │    [Chat Icon Button] → Click → Open Widget                 │
+   │                                                              │
+   │ State: OPEN                                                   │
+   │    [Close (X) Button] → Click → Close Widget                │
+   │    [Message Input Field] → Type message                     │
+   │    [Send Button] → Click → Send message to API             │
+   │    [Enter Key] → Press → Send message to API                │
+   │                                                              │
+   │  Actions:                                                     │
+   │    Send Message → POST /api/chat → Display AI response      │
+   │                                                              │
+   │  Connections:                                                │
+   │    → Backend API (/api/chat)                                │
+   │    → Stays on current page (overlay)                        │
+   └─────────────────────────────────────────────────────────────┘
+
+
+Complete Navigation Flow Map:
+--------------------------------------------------------------------------------
+
+                    ┌─────────────┐
+                    │   /login    │
+                    │  (Entry)    │
+                    └──────┬──────┘
+                           │
+                    [Sign In Success]
+                           │
+                           ▼
+                    ┌─────────────┐
+                    │      /      │
+                    │   (Home)    │
+                    └──────┬──────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+   [Men Link]      [Women Link]        [Logout]
+        │                  │                  │
+        ▼                  ▼                  ▼
+   ┌─────────┐       ┌─────────┐       ┌─────────┐
+   │  /men   │◄─────►│ /women  │       │ /login  │
+   │         │       │         │       │         │
+   └────┬────┘       └────┬────┘       └─────────┘
+        │                 │
+   [Logo]            [Logo]
+        │                 │
+        └──────────┬───────┘
+                   │
+                   ▼
+              ┌─────────┐
+              │    /    │
+              │ (Home)  │
+              └─────────┘
+
+   ┌─────────────────────────────────────────────────────────┐
+   │                                                         │
+   │  💬 CHAT ASSISTANT WIDGET (Overlay - No Navigation)   │
+   │                                                         │
+   │         ┌─────────┐    ┌─────────┐    ┌─────────┐      │
+   │         │    /    │    │  /men   │    │ /women  │      │
+   │         │ (Home)  │    │         │    │         │      │
+   │         └────┬────┘    └────┬────┘    └────┬────┘      │
+   │              │              │              │           │
+   │              └──────┬───────┴──────┬───────┘           │
+   │                     │              │                   │
+   │              [Chat Icon Button]                        │
+   │                     │                                  │
+   │                     ▼                                  │
+   │              ┌───────────────┐                         │
+   │              │  Chat Widget │                         │
+   │              │   (Overlay)   │                         │
+   │              │               │                         │
+   │              │  • Send Msg  │                         │
+   │              │  • Close (X) │                         │
+   │              │  • Input     │                         │
+   │              └───────────────┘                         │
+   │                     │                                  │
+   │              [POST /api/chat]                         │
+   │                     │                                  │
+   │                     ▼                                  │
+   │              ┌───────────────┐                         │
+   │              │  Backend API │                         │
+   │              │  (OpenAI)    │                         │
+   │              └───────────────┘                         │
+   │                                                         │
+   │  Note: Chat Widget stays on current page (overlay)     │
+   │        Available on: /, /men, /women                   │
+   └─────────────────────────────────────────────────────────┘
+
+
+Action Summary by Page:
+--------------------------------------------------------------------------------
+
+/login:
+  • Input: username field
+  • Input: password field
+  • Button: Sign In → /
+  • Text: Demo credentials hint
+
+/:
+  • Link: Logo → /
+  • Link: Men → /men
+  • Link: Women → /women
+  • Button: Shop Men → /men
+  • Button: Shop Women → /women
+  • Button: Logout → /login
+  • Button: Chat Icon → Open Chat Widget
+
+/men:
+  • Link: Logo → /
+  • Link: Men → /men (refresh)
+  • Link: Women → /women
+  • Button: Logout → /login
+  • Display: 6 Product Cards (no click action)
+  • Button: Chat Icon → Open Chat Widget
+
+/women:
+  • Link: Logo → /
+  • Link: Men → /men
+  • Link: Women → /women (refresh)
+  • Button: Logout → /login
+  • Display: 6 Product Cards (no click action)
+  • Button: Chat Icon → Open Chat Widget
+
+Chat Widget (when open):
+  • Button: Close (X) → Close Widget
+  • Input: Message field
+  • Button: Send → POST /api/chat
+  • Key: Enter → POST /api/chat
