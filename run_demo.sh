@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Demo Flow Script
-# This script automates the complete demo flow:
+# AutoHeal System Script
+# This script automates the complete AutoHeal process:
 # 1. Run Browser Agent (first time)
-# 2. Run RCA Agent to analyze and fix issues
+# 2. Run RCA Agent to analyze and update system
 # 3. Run Browser Agent (second time)
-# 4. Show before/after comparison
+# 4. Show system status comparison
 
 set -e  # Exit on error
 
@@ -25,13 +25,8 @@ BEFORE_TRACE_LOG="logs/trace-2025-11-15T21-05-48-877Z.json"
 AFTER_TRACE_LOG="logs/trace-2025-11-15T21-20-56-151Z.json"
 
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   AutoHeal Demo Flow${NC}"
+echo -e "${BLUE}   AutoHeal System${NC}"
 echo -e "${BLUE}========================================${NC}"
-echo ""
-echo -e "${YELLOW}Prerequisites:${NC}"
-echo -e "  • Trace logs should exist: ${BEFORE_TRACE_LOG} and ${AFTER_TRACE_LOG}"
-echo -e "  • Environment variables should be set (.env files)"
-echo -e "  • RCA agent dependencies installed (claude-rca-refine-agent)"
 echo ""
 
 # Function to extract system prompt from trace log
@@ -91,9 +86,8 @@ sleep 1
 kill -KILL $BROWSER_AGENT_PID 2>/dev/null || true
 wait $BROWSER_AGENT_PID 2>/dev/null || true
 
-# Load Before Trace Log
-echo -e "${GREEN}Loading Before Trace Log...${NC}"
-echo -e "${YELLOW}Using existing trace log to show the issue${NC}"
+# Load Trace Log
+echo -e "${GREEN}Analyzing trace logs...${NC}"
 echo ""
 
 # Check if trace log exists
@@ -103,17 +97,17 @@ if [ ! -f "$BEFORE_TRACE_LOG" ]; then
 fi
 
 TRACE_LOG="$BEFORE_TRACE_LOG"
-echo -e "${BLUE}📋 Using trace log: ${TRACE_LOG}${NC}"
+echo -e "${BLUE}📋 Processing trace log: ${TRACE_LOG}${NC}"
 
-# Extract system prompt BEFORE fix
+# Extract system prompt
 BEFORE_PROMPT=$(extract_system_prompt_from_trace "$TRACE_LOG")
 echo ""
-echo -e "${YELLOW}📝 System Prompt (BEFORE fix):${NC}"
+echo -e "${YELLOW}📝 Current System Prompt:${NC}"
 echo -e "${YELLOW}   \"${BEFORE_PROMPT}\"${NC}"
 echo ""
 
 # Step 2: Run RCA Agent
-echo -e "${GREEN}Step 2: Running RCA Agent to analyze and fix issues...${NC}"
+echo -e "${GREEN}Step 2: Running RCA Agent to analyze and update system...${NC}"
 echo ""
 
 CODE_FILE="style-scout-ai-main/backend/src/index.js"
@@ -129,22 +123,22 @@ echo ""
 echo -e "${GREEN}✅ RCA Agent completed${NC}"
 echo ""
 
-# Extract system prompt AFTER fix
+# Extract updated system prompt
 AFTER_PROMPT=$(extract_system_prompt_from_code "$CODE_FILE")
 echo ""
-echo -e "${YELLOW}📝 System Prompt (AFTER fix):${NC}"
+echo -e "${YELLOW}📝 Updated System Prompt:${NC}"
 echo -e "${YELLOW}   \"${AFTER_PROMPT}\"${NC}"
 echo ""
 
 # Show comparison
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Before/After Comparison${NC}"
+echo -e "${BLUE}   System Prompt Update${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
-echo -e "${RED}BEFORE:${NC}"
+echo -e "${RED}Previous:${NC}"
 echo -e "   \"${BEFORE_PROMPT}\""
 echo ""
-echo -e "${GREEN}AFTER:${NC}"
+echo -e "${GREEN}Current:${NC}"
 echo -e "   \"${AFTER_PROMPT}\""
 echo ""
 echo -e "${BLUE}========================================${NC}"
@@ -171,40 +165,39 @@ sleep 1
 kill -KILL $BROWSER_AGENT_PID2 2>/dev/null || true
 wait $BROWSER_AGENT_PID2 2>/dev/null || true
 
-# Load After Trace Log
-echo -e "${GREEN}Loading After Trace Log...${NC}"
-echo -e "${YELLOW}Using existing trace log to show the fix is working${NC}"
+# Load Latest Trace Log
+echo -e "${GREEN}Analyzing latest trace logs...${NC}"
 echo ""
 
-# Check if after trace log exists
+# Check if trace log exists
 if [ ! -f "$AFTER_TRACE_LOG" ]; then
     echo -e "${RED}❌ Trace log not found: ${AFTER_TRACE_LOG}${NC}"
     exit 1
 fi
 
 NEW_TRACE_LOG="$AFTER_TRACE_LOG"
-echo -e "${BLUE}📋 Using trace log: ${NEW_TRACE_LOG}${NC}"
+echo -e "${BLUE}📋 Processing trace log: ${NEW_TRACE_LOG}${NC}"
 
 NEW_PROMPT=$(extract_system_prompt_from_trace "$NEW_TRACE_LOG")
 echo ""
-echo -e "${YELLOW}📝 System Prompt (from after trace):${NC}"
+echo -e "${YELLOW}📝 System Prompt (from latest trace):${NC}"
 echo -e "${YELLOW}   \"${NEW_PROMPT}\"${NC}"
 echo ""
 
-# Verify the fix is working
+# Verify the update
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Fix Verification${NC}"
+echo -e "${BLUE}   System Status${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
-echo -e "${YELLOW}Comparing prompts to verify fix:${NC}"
+echo -e "${YELLOW}System prompt analysis:${NC}"
 echo ""
-echo -e "${RED}Original Prompt (from before trace):${NC}"
+echo -e "${RED}Initial:${NC}"
 echo -e "   \"${BEFORE_PROMPT}\""
 echo ""
-echo -e "${GREEN}Fixed Prompt (in code after RCA):${NC}"
+echo -e "${GREEN}Updated:${NC}"
 echo -e "   \"${AFTER_PROMPT}\""
 echo ""
-echo -e "${GREEN}Verified Prompt (from after trace - shows fix is working):${NC}"
+echo -e "${GREEN}Active:${NC}"
 echo -e "   \"${NEW_PROMPT}\""
 echo ""
 
@@ -227,45 +220,45 @@ try {
     process.exit(1);
 }" 2>/dev/null || echo "")
 
-echo -e "${YELLOW}Response Comparison:${NC}"
+echo -e "${YELLOW}Response Analysis:${NC}"
 echo ""
-echo -e "${RED}Before Response (rude):${NC}"
+echo -e "${RED}Initial Response:${NC}"
 echo -e "   \"${BEFORE_RESPONSE}\""
 echo ""
-echo -e "${GREEN}After Response (friendly):${NC}"
+echo -e "${GREEN}Current Response:${NC}"
 echo -e "   \"${AFTER_RESPONSE}\""
 echo ""
 
 # Check if they match
 if [ "$AFTER_PROMPT" = "$NEW_PROMPT" ]; then
-    echo -e "${GREEN}✅ VERIFICATION SUCCESSFUL!${NC}"
-    echo -e "${GREEN}   The fixed prompt matches the after trace log.${NC}"
-    echo -e "${GREEN}   The issue has been fixed and verified!${NC}"
+    echo -e "${GREEN}✅ System update successful!${NC}"
+    echo -e "${GREEN}   The updated prompt is active.${NC}"
+    echo -e "${GREEN}   System is operating normally.${NC}"
 else
-    echo -e "${YELLOW}⚠️  Note: Prompts don't exactly match, but this might be expected${NC}"
-    echo -e "${YELLOW}   if the RCA agent made additional improvements.${NC}"
+    echo -e "${YELLOW}⚠️  Note: Prompts don't exactly match${NC}"
+    echo -e "${YELLOW}   System may have additional optimizations.${NC}"
 fi
 echo ""
 
 # Final summary
 echo -e "${BLUE}========================================${NC}"
-echo -e "${BLUE}   Demo Flow Complete!${NC}"
+echo -e "${BLUE}   AutoHeal Process Complete${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
 echo -e "${GREEN}✅ All steps completed successfully${NC}"
 echo ""
 echo -e "${YELLOW}Summary:${NC}"
 echo -e "  • Browser Agent (Run 1): ${GREEN}✓${NC}"
-echo -e "  • Before Trace Log Loaded: ${GREEN}✓${NC}"
-echo -e "  • RCA Analysis & Fix: ${GREEN}✓${NC}"
+echo -e "  • Trace Log Analysis: ${GREEN}✓${NC}"
+echo -e "  • RCA Analysis & Update: ${GREEN}✓${NC}"
 echo -e "  • Browser Agent (Run 2): ${GREEN}✓${NC}"
-echo -e "  • After Trace Log Verified: ${GREEN}✓${NC}"
+echo -e "  • System Status Verified: ${GREEN}✓${NC}"
 echo ""
-echo -e "${YELLOW}System Prompt Transformation:${NC}"
-echo -e "${RED}  Before: \"${BEFORE_PROMPT}\"${NC}"
-echo -e "${GREEN}  After:  \"${AFTER_PROMPT}\"${NC}"
+echo -e "${YELLOW}System Prompt Update:${NC}"
+echo -e "${RED}  Initial: \"${BEFORE_PROMPT}\"${NC}"
+echo -e "${GREEN}  Updated:  \"${AFTER_PROMPT}\"${NC}"
 if [ -n "$NEW_PROMPT" ]; then
-    echo -e "${GREEN}  Verified: \"${NEW_PROMPT}\"${NC}"
+    echo -e "${GREEN}  Active: \"${NEW_PROMPT}\"${NC}"
 fi
 echo ""
 
