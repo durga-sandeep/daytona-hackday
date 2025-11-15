@@ -12,7 +12,11 @@ interface Message {
 }
 
 const ChatAssistant = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // Load initial state from localStorage, default to false if not set
+  const [isOpen, setIsOpen] = useState(() => {
+    const saved = localStorage.getItem('chatAssistantOpen');
+    return saved === 'true';
+  });
   const [messages, setMessages] = useState<Message[]>([
     { role: "assistant", content: "Hello! I'm your shopping assistant. How can I help you today?" }
   ]);
@@ -20,6 +24,11 @@ const ChatAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // Save isOpen state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('chatAssistantOpen', isOpen.toString());
+  }, [isOpen]);
 
   useEffect(() => {
     if (scrollRef.current) {
