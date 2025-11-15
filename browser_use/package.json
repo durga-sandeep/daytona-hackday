@@ -1,0 +1,21 @@
+{
+  "name": "browser-use-automation",
+  "version": "1.0.0",
+  "description": "Browser Use automation for Style Scout AI chat assistant",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "chat": "node index.js",
+    "tunnel": "node tunnel.js",
+    "local": "node index-local.js",
+    "chat-local": "node index-local.js",
+    "style-scout": "node style-scout-automation.js"
+  },
+  "dependencies": {
+    "browser-use-sdk": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "playwright": "^1.40.0"
+  }
+}
+

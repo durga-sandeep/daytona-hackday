@@ -6,15 +6,22 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "export-insights": "node scripts/export-galileo-insights.js"
   },
-  "keywords": ["openai", "chat", "api"],
+  "keywords": [
+    "openai",
+    "chat",
+    "api"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "openai": "^4.20.1"
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "galileo": "^1.29.0",
+    "openai": "^4.20.1",
+    "tsx": "^4.20.6"
   }
 }
