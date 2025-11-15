@@ -161,6 +161,39 @@ To view your logs:
 3. Open the log stream (default: `ChatAssistant`)
 4. Click on any trace to see detailed information
 
+### Exporting Insights Locally
+
+You can export Galileo insights (like "Ignored Bye Instruction") to a local `galileo_insights` folder:
+
+**Method 1: Using the Script (Recommended)**
+```bash
+cd backend
+npm run export-insights
+```
+
+This will:
+- Create a `galileo_insights` folder in the backend directory
+- Attempt to fetch insights via API
+- If API access fails, create instructions for manual export
+
+**Method 2: Using the API Endpoint**
+```bash
+curl -X POST http://localhost:3001/api/galileo/export-insights
+```
+
+**Method 3: Manual Export from Console**
+1. Go to [app.galileo.ai](https://app.galileo.ai)
+2. Navigate to your project → log stream
+3. Click on the **"Data"** tab
+4. Click **"Export"** button
+5. Choose CSV or JSONL format
+6. Download and save to `backend/galileo_insights/` folder
+
+**Viewing Insights in Console:**
+- Click on the **"Insights"** tab to see insights like "Ignored Bye Instruction"
+- Click **"View Affected Spans"** to see which traces are affected
+- Insights are automatically generated when you configure evaluation metrics
+
 ### Change OpenAI Model
 
 Edit [src/index.js:61](src/index.js#L61) to change the model:
