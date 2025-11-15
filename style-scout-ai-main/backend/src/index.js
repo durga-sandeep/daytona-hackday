@@ -2,16 +2,28 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import OpenAI from 'openai';
+import { init, wrapOpenAI, flush, getLogger } from 'galileo';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Initialize Galileo
+// Set project and log stream names (created if they don't exist)
+// You can also set these using GALILEO_PROJECT and GALILEO_LOG_STREAM environment variables
+init({
+  project: process.env.GALILEO_PROJECT || 'StyleScoutAI',
+  logStream: process.env.GALILEO_LOG_STREAM || 'ChatAssistant',
+});
+
 // Initialize OpenAI
-const openai = new OpenAI({
+const openaiClient = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// Wrap OpenAI client with Galileo for automatic logging
+const openai = wrapOpenAI(openaiClient);
 
 // Middleware
 // Allow CORS from any origin in cloud environment, or specific URL if set
@@ -69,6 +81,25 @@ Keep your responses concise, engaging, and helpful. Focus on creating a premium 
     const aiResponse = completion.choices[0].message.content;
 
     console.log('OpenAI response received');
+
+    // Flush Galileo logs to ensure they're sent
+    await flush();
+
+    // Show Galileo log information (helpful for viewing traces)
+    try {
+      const galileoLogger = getLogger();
+      const galileoConsoleUrl = (process.env.GALILEO_CONSOLE_URL ?? 'https://app.galileo.ai').replace(/\/+$/, '');
+      const projectUrl = `${galileoConsoleUrl}/project/${galileoLogger.client.projectId}`;
+      const logStreamUrl = `${projectUrl}/log-streams/${galileoLogger.client.logStreamId}`;
+      
+      console.log();
+      console.log('🚀 GALILEO LOG INFORMATION:');
+      console.log(`🔗 Project   : ${projectUrl}`);
+      console.log(`📝 Log Stream: ${logStreamUrl}`);
+    } catch (err) {
+      // Silently fail if Galileo logger info is not available
+      console.debug('Galileo logger info not available:', err.message);
+    }
 
     res.json({ response: aiResponse });
 

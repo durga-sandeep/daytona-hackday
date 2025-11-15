@@ -1,10 +1,10 @@
 # Style Scout AI - Backend API
 
-Node.js/Express backend with OpenAI integration for the AI chat assistant.
+Node.js/Express backend with OpenAI integration for the AI chat assistant, with automatic logging via Galileo.
 
 ## Overview
 
-This backend provides a REST API for the Style Scout AI chat assistant, powered by OpenAI's GPT-4o-mini model.
+This backend provides a REST API for the Style Scout AI chat assistant, powered by OpenAI's GPT-4o-mini model. All OpenAI API calls are automatically logged to Galileo for monitoring, debugging, and evaluation.
 
 ## Setup Instructions
 
@@ -27,13 +27,20 @@ Edit the `.env` file and add your configuration:
 
 ```env
 OPENAI_API_KEY=sk-your-actual-openai-api-key-here
+GALILEO_API_KEY=your-galileo-api-key-here
 PORT=3001
 FRONTEND_URL=http://localhost:8080
+
+# Optional: Customize Galileo project and log stream names
+# GALILEO_PROJECT=StyleScoutAI
+# GALILEO_LOG_STREAM=ChatAssistant
 ```
 
 **Important:**
 - Get your OpenAI API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+- Get your Galileo API key from [Galileo Console](https://app.galileo.ai/settings/api-keys)
 - Make sure `FRONTEND_URL` matches your frontend port (default is `8080`)
+- Galileo project and log stream will be created automatically if they don't exist
 
 ### 3. Start the Backend Server
 
@@ -128,8 +135,31 @@ Content-Type: application/json
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `OPENAI_API_KEY` | Yes | - | Your OpenAI API key |
+| `GALILEO_API_KEY` | Yes | - | Your Galileo API key for logging |
+| `GALILEO_PROJECT` | No | `StyleScoutAI` | Galileo project name |
+| `GALILEO_LOG_STREAM` | No | `ChatAssistant` | Galileo log stream name |
 | `PORT` | No | `3001` | Server port |
 | `FRONTEND_URL` | No | `http://localhost:5173` | Frontend URL for CORS |
+
+### Galileo Integration
+
+This backend automatically logs all OpenAI API calls to Galileo for:
+- **Monitoring**: Track all LLM interactions in real-time
+- **Debugging**: Inspect request/response details and trace issues
+- **Evaluation**: Analyze response quality and performance metrics
+
+After making a chat request, you can view the logged trace in the [Galileo Console](https://app.galileo.ai). The trace will include:
+- Full conversation history
+- System prompts
+- Model parameters (temperature, max_tokens, etc.)
+- Response content and metadata
+- Latency and token usage
+
+To view your logs:
+1. Go to [app.galileo.ai](https://app.galileo.ai)
+2. Navigate to your project (default: `StyleScoutAI`)
+3. Open the log stream (default: `ChatAssistant`)
+4. Click on any trace to see detailed information
 
 ### Change OpenAI Model
 
@@ -230,6 +260,7 @@ Then restart the backend server.
 - **cors** - Cross-origin resource sharing
 - **dotenv** - Environment variable management
 - **openai** - OpenAI API client
+- **galileo** - LLM observability and logging platform
 - **nodemon** - Development auto-reload (dev dependency)
 
 ## License
