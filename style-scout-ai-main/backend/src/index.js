@@ -15,6 +15,34 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Path to logs directory (relative to project root)
+const LOGS_DIR = path.join(__dirname, '..', '..', '..', 'logs');
+
+// Ensure logs directory exists
+if (!fs.existsSync(LOGS_DIR)) {
+  fs.mkdirSync(LOGS_DIR, { recursive: true });
+  console.log(`✅ Created logs directory: ${LOGS_DIR}`);
+}
+
+/**
+ * Log trace data to JSON file in logs directory
+ * @param {Object} traceData - The trace data to log
+ */
+function logTraceToJSON(traceData) {
+  try {
+    const timestamp = new Date().toISOString();
+    const timestampForFilename = timestamp.replace(/[:.]/g, '-');
+    const logFileName = `trace-${timestampForFilename}.json`;
+    const logFilePath = path.join(LOGS_DIR, logFileName);
+    
+    // Write trace data as formatted JSON
+    fs.writeFileSync(logFilePath, JSON.stringify(traceData, null, 2), 'utf8');
+    console.log(`📝 Trace logged to: ${logFilePath}`);
+  } catch (error) {
+    console.error('Error logging trace to JSON:', error);
+  }
+}
+
 // Initialize Galileo
 // Set project and log stream names (created if they don't exist)
 // You can also set these using GALILEO_PROJECT and GALILEO_LOG_STREAM environment variables
@@ -240,7 +268,9 @@ app.post('/api/chat', async (req, res) => {
       galileoInfo = {
         projectUrl,
         logStreamUrl,
-        consoleUrl: galileoConsoleUrl
+        consoleUrl: galileoConsoleUrl,
+        projectId: galileoLogger.client.projectId,
+        logStreamId: galileoLogger.client.logStreamId
       };
       
       console.log();
@@ -253,6 +283,37 @@ app.post('/api/chat', async (req, res) => {
       console.debug('Galileo logger info not available:', err.message);
     }
 
+    // Log trace to JSON file
+    const traceData = {
+      timestamp: new Date().toISOString(),
+      request: {
+        message: message,
+        history: history,
+        messages: messages,
+        model: 'gpt-4o-mini',
+        temperature: 0.7,
+        max_tokens: 500
+      },
+      response: {
+        content: aiResponse,
+        model: completion.model,
+        usage: {
+          prompt_tokens: completion.usage?.prompt_tokens,
+          completion_tokens: completion.usage?.completion_tokens,
+          total_tokens: completion.usage?.total_tokens
+        },
+        finish_reason: completion.choices[0]?.finish_reason
+      },
+      galileo: galileoInfo,
+      metadata: {
+        completion_id: completion.id,
+        created: completion.created
+      }
+    };
+
+    // Log to JSON file in logs directory
+    logTraceToJSON(traceData);
+
     res.json({ 
       response: aiResponse,
       galileo: galileoInfo // Include Galileo URLs in response for frontend use
@@ -260,6 +321,23 @@ app.post('/api/chat', async (req, res) => {
 
   } catch (error) {
     console.error('Error in chat endpoint:', error);
+
+    // Log error trace to JSON file
+    const errorTraceData = {
+      timestamp: new Date().toISOString(),
+      error: true,
+      request: {
+        message: req.body?.message,
+        history: req.body?.history
+      },
+      error_details: {
+        message: error.message,
+        code: error.code,
+        status: error.status,
+        type: error.constructor?.name
+      }
+    };
+    logTraceToJSON(errorTraceData);
 
     if (error.code === 'insufficient_quota') {
       return res.status(402).json({
