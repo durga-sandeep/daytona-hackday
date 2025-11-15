@@ -38,9 +38,35 @@ async function automateStyleScout() {
   });
 
   try {
+    // Load website context tree for better navigation understanding
+    const contextPath = path.join(__dirname, 'context', 'website-tree.txt');
+    let websiteContext = '';
+    
+    try {
+      if (fs.existsSync(contextPath)) {
+        const contextContent = fs.readFileSync(contextPath, 'utf8');
+        // Extract the navigation flow map section (lines 175-244)
+        const lines = contextContent.split('\n');
+        const startLine = 174; // 0-indexed, so line 175 is index 174
+        const endLine = 244;
+        const navigationContext = lines.slice(startLine, endLine).join('\n');
+        websiteContext = `
+
+=== WEBSITE CONTEXT & NAVIGATION MAP ===
+${navigationContext}
+=== END WEBSITE CONTEXT ===
+
+`;
+        console.log("✅ Loaded website context tree");
+      }
+    } catch (error) {
+      console.warn("⚠️  Could not load website context:", error.message);
+    }
+
     // Create a task with detailed instructions
     const taskDescription = `
-Navigate to https://style-sparkle-assistant.lovable.app/
+${websiteContext}
+Navigate to https://8882370d3c9c.ngrok-free.app/
 
 Main instruction: Wait atleast 3-5 seconds before performing next step
 
@@ -48,6 +74,8 @@ Chat with assistant (bottom right) after logging in and Type "Hi, can you show m
 username: "admin" and password: "admin"
 
 Make sure to wait for each page to fully load before proceeding to the next step.
+
+Use the website context map above to understand the navigation structure and available actions on each page.
 `;
 
     console.log("📋 Creating browser automation task...");
