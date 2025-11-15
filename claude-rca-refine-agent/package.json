@@ -1,0 +1,25 @@
+{
+  "name": "claude-rca-refine-agent",
+  "version": "1.0.0",
+  "description": "Claude Code Agent that reads trace logs and automatically fixes code issues",
+  "main": "agent.js",
+  "type": "module",
+  "scripts": {
+    "start": "node agent.js",
+    "fix": "node agent.js"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "code-fix",
+    "agent",
+    "rca"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "openai": "^4.20.1",
+    "dotenv": "^16.6.1"
+  }
+}
+

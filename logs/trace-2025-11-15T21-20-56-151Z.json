@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-11-15T21:20:56.151Z",
+  "request": {
+    "message": "Hi",
+    "history": [
+      {
+        "role": "assistant",
+        "content": "Hello! I'm your shopping assistant. How can I help you today?"
+      }
+    ],
+    "messages": [
+      {
+        "role": "system",
+        "content": "Please be helpful and provide a friendly response to the user's inquiries."
+      },
+      {
+        "role": "assistant",
+        "content": "Hello! I'm your shopping assistant. How can I help you today?"
+      },
+      {
+        "role": "user",
+        "content": "Hi"
+      }
+    ],
+    "model": "gpt-4o-mini",
+    "temperature": 0.7,
+    "max_tokens": 500
+  },
+  "response": {
+    "content": "Hi there! How can I assist you today?",
+    "model": "gpt-4o-mini-2024-07-18",
+    "usage": {
+      "prompt_tokens": 43,
+      "completion_tokens": 10,
+      "total_tokens": 53
+    },
+    "finish_reason": "stop"
+  },
+  "galileo": {
+    "projectUrl": "https://app.galileo.ai/project/0ce1eb33-4fcb-4e27-a9ed-0a00c27b32d3",
+    "logStreamUrl": "https://app.galileo.ai/project/0ce1eb33-4fcb-4e27-a9ed-0a00c27b32d3/log-streams/83aa7ef4-062c-460a-8620-0876fd1f239b",
+    "consoleUrl": "https://app.galileo.ai",
+    "projectId": "0ce1eb33-4fcb-4e27-a9ed-0a00c27b32d3",
+    "logStreamId": "83aa7ef4-062c-460a-8620-0876fd1f239b"
+  },
+  "metadata": {
+    "completion_id": "chatcmpl-CcHzRqeJvebxwmH5RCs2ZB6ecS8IY",
+    "created": 1763241653
+  }
+}
