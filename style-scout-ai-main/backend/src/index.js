@@ -14,8 +14,10 @@ const openai = new OpenAI({
 });
 
 // Middleware
+// Allow CORS from any origin in cloud environment, or specific URL if set
+const corsOrigin = process.env.FRONTEND_URL || process.env.CORS_ORIGIN || '*';
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:8080',
+  origin: corsOrigin === '*' ? true : corsOrigin,
   credentials: true,
 }));
 app.use(express.json());
@@ -91,9 +93,10 @@ Keep your responses concise, engaging, and helpful. Focus on creating a premium 
   }
 });
 
-// Start server (localhost only)
-app.listen(PORT, 'localhost', () => {
-  console.log(`🚀 Style Scout AI Backend running on http://localhost:${PORT}`);
-  console.log(`📡 Health check: http://localhost:${PORT}/health`);
-  console.log(`💬 Chat endpoint: http://localhost:${PORT}/api/chat`);
+// Start server (accessible from all network interfaces)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Style Scout AI Backend running on http://0.0.0.0:${PORT}`);
+  console.log(`📡 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`💬 Chat endpoint: http://0.0.0.0:${PORT}/api/chat`);
+  console.log(`🌐 Accessible from external networks`);
 });
