@@ -1,0 +1,26 @@
+# Generated files
+generated-context.txt
+browser-use-context.txt
+*.txt
+graph.mermaid
+graph.dot
+graph-tree.txt
+
+# Output directory
+output/
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+

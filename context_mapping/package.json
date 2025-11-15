@@ -1,0 +1,34 @@
+{
+  "name": "style-scout-context-mapping",
+  "version": "1.0.0",
+  "description": "Graph-based context mapping system for Style Scout AI website",
+  "type": "module",
+  "main": "context-generator.js",
+  "scripts": {
+    "explore": "node explore-graph.js",
+    "explore:full": "node explore-graph.js full",
+    "explore:pages": "node explore-graph.js pages",
+    "explore:page": "node explore-graph.js page",
+    "explore:paths": "node explore-graph.js paths",
+    "context": "node generate-context.js",
+    "context:all": "node generate-context.js",
+    "png": "node generate-png-visualization.js",
+    "visual": "node generate-visual.js",
+    "visual:mermaid": "node generate-visual.js mermaid",
+    "visual:dot": "node generate-visual.js dot",
+    "visual:tree": "node generate-visual.js tree",
+    "example": "node example-usage.js"
+  },
+  "keywords": [
+    "context-mapping",
+    "browser-automation",
+    "graph",
+    "website-structure"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "browser-use-sdk": "^1.0.0"
+  }
+}
+

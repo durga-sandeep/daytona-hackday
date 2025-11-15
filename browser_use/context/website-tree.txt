@@ -1,0 +1,52 @@
+================================================================================
+Website Context Tree: Style Scout AI Website Context Map
+================================================================================
+
+Base URL: https://style-sparkle-assistant.lovable.app
+Version: 1.0.0
+
+Website Structure Tree:
+--------------------------------------------------------------------------------
+
+
+
+All Pages:
+--------------------------------------------------------------------------------
+
+📄 Login Page
+   Route: /login
+   Auth Required: No
+   Elements: 4
+
+📄 Home Page
+   Route: /
+   Auth Required: Yes
+   Elements: 3
+
+📄 Men's Collection
+   Route: /men
+   Auth Required: Yes
+   Elements: 2
+   Products: 6
+
+📄 Women's Collection
+   Route: /women
+   Auth Required: Yes
+   Elements: 2
+   Products: 6
+
+
+Global Components:
+--------------------------------------------------------------------------------
+
+🧩 Navigation Bar
+   Description: Fixed top navigation bar present on all authenticated pages
+   Appears On: home, men, women
+
+🧩 Chat Assistant
+   Description: Floating chat assistant widget in bottom right corner, available on all authenticated pages
+   Appears On: home, men, women
+
+🧩 Product Card
+   Description: Reusable product card component displaying product image, category, name, and price
+   Appears On: men, women

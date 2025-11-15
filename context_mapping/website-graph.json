@@ -1,0 +1,532 @@
+{
+  "metadata": {
+    "name": "Style Scout AI Website Context Map",
+    "version": "1.0.0",
+    "description": "Graph-based context mapping for Style Scout AI e-commerce website",
+    "baseUrl": "https://style-sparkle-assistant.lovable.app",
+    "lastUpdated": "2024-01-20"
+  },
+  "nodes": [
+    {
+      "id": "login",
+      "type": "page",
+      "route": "/login",
+      "name": "Login Page",
+      "description": "Authentication page where users log in to access the website",
+      "isPublic": true,
+      "requiresAuth": false,
+      "elements": [
+        {
+          "id": "username-input",
+          "type": "input",
+          "selector": "input[id='username']",
+          "description": "Username input field",
+          "placeholder": "Enter username",
+          "required": true
+        },
+        {
+          "id": "password-input",
+          "type": "input",
+          "selector": "input[id='password']",
+          "description": "Password input field",
+          "placeholder": "Enter password",
+          "required": true,
+          "inputType": "password"
+        },
+        {
+          "id": "submit-button",
+          "type": "button",
+          "selector": "button[type='submit']",
+          "description": "Sign In button to submit login form",
+          "text": "Sign In"
+        },
+        {
+          "id": "demo-credentials",
+          "type": "text",
+          "selector": "p.text-sm.text-center",
+          "description": "Demo credentials hint text",
+          "content": "Demo credentials: admin / admin"
+        }
+      ],
+      "userFlow": {
+        "entryPoint": true,
+        "nextSteps": ["home"],
+        "actions": [
+          "Enter username in username field",
+          "Enter password in password field",
+          "Click Sign In button",
+          "Wait for redirect to home page"
+        ]
+      }
+    },
+    {
+      "id": "home",
+      "type": "page",
+      "route": "/",
+      "name": "Home Page",
+      "description": "Landing page with hero section and navigation to Men's and Women's collections",
+      "isPublic": false,
+      "requiresAuth": true,
+      "components": ["Navigation", "ChatAssistant"],
+      "elements": [
+        {
+          "id": "hero-title",
+          "type": "heading",
+          "selector": "h1.text-6xl",
+          "description": "Main hero title",
+          "text": "Elevate Your Style"
+        },
+        {
+          "id": "shop-men-button",
+          "type": "link",
+          "selector": "a[href='/men']",
+          "description": "Button to navigate to Men's collection",
+          "text": "Shop Men"
+        },
+        {
+          "id": "shop-women-button",
+          "type": "link",
+          "selector": "a[href='/women']",
+          "description": "Button to navigate to Women's collection",
+          "text": "Shop Women"
+        }
+      ],
+      "userFlow": {
+        "entryPoint": false,
+        "nextSteps": ["men", "women"],
+        "actions": [
+          "View hero section",
+          "Click 'Shop Men' to go to Men's collection",
+          "Click 'Shop Women' to go to Women's collection",
+          "Open chat assistant from bottom right"
+        ]
+      }
+    },
+    {
+      "id": "men",
+      "type": "page",
+      "route": "/men",
+      "name": "Men's Collection",
+      "description": "Product listing page displaying men's fashion items including blazers, watches, and sneakers",
+      "isPublic": false,
+      "requiresAuth": true,
+      "components": ["Navigation", "ProductCard", "ChatAssistant"],
+      "elements": [
+        {
+          "id": "page-title",
+          "type": "heading",
+          "selector": "h1.text-5xl",
+          "description": "Page title",
+          "text": "Men's Collection"
+        },
+        {
+          "id": "product-grid",
+          "type": "container",
+          "selector": "div.grid.grid-cols-1",
+          "description": "Grid container displaying product cards",
+          "childCount": 6
+        }
+      ],
+      "products": [
+        {
+          "id": 1,
+          "name": "Premium Black Blazer",
+          "price": "$599",
+          "category": "Tailoring"
+        },
+        {
+          "id": 2,
+          "name": "Luxury Timepiece",
+          "price": "$1,299",
+          "category": "Accessories"
+        },
+        {
+          "id": 3,
+          "name": "Designer Sneakers",
+          "price": "$399",
+          "category": "Footwear"
+        },
+        {
+          "id": 4,
+          "name": "Classic Suit Jacket",
+          "price": "$699",
+          "category": "Tailoring"
+        },
+        {
+          "id": 5,
+          "name": "Elegant Watch",
+          "price": "$899",
+          "category": "Accessories"
+        },
+        {
+          "id": 6,
+          "name": "Casual Sneakers",
+          "price": "$299",
+          "category": "Footwear"
+        }
+      ],
+      "userFlow": {
+        "entryPoint": false,
+        "nextSteps": ["home", "women"],
+        "actions": [
+          "Browse product cards",
+          "View product details (image, name, price, category)",
+          "Open chat assistant to ask about products"
+        ]
+      }
+    },
+    {
+      "id": "women",
+      "type": "page",
+      "route": "/women",
+      "name": "Women's Collection",
+      "description": "Product listing page displaying women's fashion items including handbags, dresses, and heels",
+      "isPublic": false,
+      "requiresAuth": true,
+      "components": ["Navigation", "ProductCard", "ChatAssistant"],
+      "elements": [
+        {
+          "id": "page-title",
+          "type": "heading",
+          "selector": "h1.text-5xl",
+          "description": "Page title",
+          "text": "Women's Collection"
+        },
+        {
+          "id": "product-grid",
+          "type": "container",
+          "selector": "div.grid.grid-cols-1",
+          "description": "Grid container displaying product cards",
+          "childCount": 6
+        }
+      ],
+      "products": [
+        {
+          "id": 1,
+          "name": "Designer Handbag",
+          "price": "$899",
+          "category": "Accessories"
+        },
+        {
+          "id": 2,
+          "name": "Evening Gown",
+          "price": "$1,299",
+          "category": "Dresses"
+        },
+        {
+          "id": 3,
+          "name": "Classic Heels",
+          "price": "$499",
+          "category": "Footwear"
+        },
+        {
+          "id": 4,
+          "name": "Luxury Clutch",
+          "price": "$699",
+          "category": "Accessories"
+        },
+        {
+          "id": 5,
+          "name": "Cocktail Dress",
+          "price": "$799",
+          "category": "Dresses"
+        },
+        {
+          "id": 6,
+          "name": "Elegant Pumps",
+          "price": "$399",
+          "category": "Footwear"
+        }
+      ],
+      "userFlow": {
+        "entryPoint": false,
+        "nextSteps": ["home", "men"],
+        "actions": [
+          "Browse product cards",
+          "View product details (image, name, price, category)",
+          "Open chat assistant to ask about products"
+        ]
+      }
+    },
+    {
+      "id": "navigation",
+      "type": "component",
+      "name": "Navigation Bar",
+      "description": "Fixed top navigation bar present on all authenticated pages",
+      "isGlobal": true,
+      "elements": [
+        {
+          "id": "logo",
+          "type": "link",
+          "selector": "a.flex.items-center.gap-2",
+          "description": "LUXE logo link to home page",
+          "text": "LUXE"
+        },
+        {
+          "id": "men-link",
+          "type": "link",
+          "selector": "a[href='/men']",
+          "description": "Navigation link to Men's collection",
+          "text": "Men"
+        },
+        {
+          "id": "women-link",
+          "type": "link",
+          "selector": "a[href='/women']",
+          "description": "Navigation link to Women's collection",
+          "text": "Women"
+        },
+        {
+          "id": "logout-button",
+          "type": "button",
+          "selector": "button:has(svg)",
+          "description": "Logout button with icon",
+          "text": "Logout"
+        }
+      ],
+      "appearsOn": ["home", "men", "women"]
+    },
+    {
+      "id": "chat-assistant",
+      "type": "component",
+      "name": "Chat Assistant",
+      "description": "Floating chat assistant widget in bottom right corner, available on all authenticated pages",
+      "isGlobal": true,
+      "position": "fixed bottom-6 right-6",
+      "elements": [
+        {
+          "id": "chat-toggle-button",
+          "type": "button",
+          "selector": "button.fixed.bottom-6.right-6",
+          "description": "Floating button to open chat (when closed)",
+          "icon": "MessageCircle",
+          "size": "w-14 h-14"
+        },
+        {
+          "id": "chat-window",
+          "type": "container",
+          "selector": "div.fixed.bottom-6.right-6.w-96",
+          "description": "Chat window card (when open)",
+          "size": "w-96 h-[500px]"
+        },
+        {
+          "id": "chat-header",
+          "type": "container",
+          "selector": "div.flex.items-center.justify-between.p-4",
+          "description": "Chat window header with title and close button",
+          "title": "Shopping Assistant"
+        },
+        {
+          "id": "chat-close-button",
+          "type": "button",
+          "selector": "button:has(svg.w-4.h-4)",
+          "description": "Close chat window button",
+          "icon": "X"
+        },
+        {
+          "id": "chat-messages",
+          "type": "container",
+          "selector": "div.space-y-4",
+          "description": "Scrollable messages container"
+        },
+        {
+          "id": "chat-input",
+          "type": "input",
+          "selector": "input[placeholder='Ask me anything...']",
+          "description": "Chat message input field",
+          "placeholder": "Ask me anything..."
+        },
+        {
+          "id": "chat-send-button",
+          "type": "button",
+          "selector": "button:has(svg):has-text('Send')",
+          "description": "Send message button",
+          "icon": "Send"
+        }
+      ],
+      "appearsOn": ["home", "men", "women"],
+      "apiEndpoint": "/api/chat",
+      "initialMessage": "Hello! I'm your shopping assistant. How can I help you today?"
+    },
+    {
+      "id": "product-card",
+      "type": "component",
+      "name": "Product Card",
+      "description": "Reusable product card component displaying product image, category, name, and price",
+      "isReusable": true,
+      "elements": [
+        {
+          "id": "product-image",
+          "type": "image",
+          "selector": "img.object-cover",
+          "description": "Product image with hover zoom effect"
+        },
+        {
+          "id": "product-category",
+          "type": "text",
+          "selector": "p.text-sm.text-muted-foreground",
+          "description": "Product category label"
+        },
+        {
+          "id": "product-name",
+          "type": "heading",
+          "selector": "h3.font-semibold",
+          "description": "Product name"
+        },
+        {
+          "id": "product-price",
+          "type": "text",
+          "selector": "p.text-accent.font-bold",
+          "description": "Product price"
+        }
+      ],
+      "appearsOn": ["men", "women"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "login",
+      "to": "home",
+      "type": "navigation",
+      "trigger": "successful_login",
+      "description": "After successful login, user is redirected to home page"
+    },
+    {
+      "from": "home",
+      "to": "men",
+      "type": "navigation",
+      "trigger": "click_shop_men_button",
+      "description": "Clicking 'Shop Men' button navigates to Men's collection"
+    },
+    {
+      "from": "home",
+      "to": "women",
+      "type": "navigation",
+      "trigger": "click_shop_women_button",
+      "description": "Clicking 'Shop Women' button navigates to Women's collection"
+    },
+    {
+      "from": "men",
+      "to": "home",
+      "type": "navigation",
+      "trigger": "click_logo",
+      "description": "Clicking logo in navigation returns to home"
+    },
+    {
+      "from": "men",
+      "to": "women",
+      "type": "navigation",
+      "trigger": "click_women_link",
+      "description": "Clicking 'Women' link in navigation goes to Women's collection"
+    },
+    {
+      "from": "women",
+      "to": "home",
+      "type": "navigation",
+      "trigger": "click_logo",
+      "description": "Clicking logo in navigation returns to home"
+    },
+    {
+      "from": "women",
+      "to": "men",
+      "type": "navigation",
+      "trigger": "click_men_link",
+      "description": "Clicking 'Men' link in navigation goes to Men's collection"
+    },
+    {
+      "from": "home",
+      "to": "login",
+      "type": "navigation",
+      "trigger": "logout",
+      "description": "Logging out redirects to login page"
+    },
+    {
+      "from": "men",
+      "to": "login",
+      "type": "navigation",
+      "trigger": "logout",
+      "description": "Logging out redirects to login page"
+    },
+    {
+      "from": "women",
+      "to": "login",
+      "type": "navigation",
+      "trigger": "logout",
+      "description": "Logging out redirects to login page"
+    },
+    {
+      "from": "chat-assistant",
+      "to": "home",
+      "type": "interaction",
+      "trigger": "chat_message",
+      "description": "Chat assistant can provide information about products and navigation"
+    },
+    {
+      "from": "chat-assistant",
+      "to": "men",
+      "type": "interaction",
+      "trigger": "chat_message",
+      "description": "Chat assistant can provide information about men's products"
+    },
+    {
+      "from": "chat-assistant",
+      "to": "women",
+      "type": "interaction",
+      "trigger": "chat_message",
+      "description": "Chat assistant can provide information about women's products"
+    }
+  ],
+  "authentication": {
+    "required": true,
+    "publicPages": ["login"],
+    "protectedPages": ["home", "men", "women"],
+    "defaultCredentials": {
+      "username": "admin",
+      "password": "admin"
+    },
+    "sessionStorage": "localStorage",
+    "redirectBehavior": "redirect_to_login_if_not_authenticated"
+  },
+  "commonPatterns": [
+    {
+      "name": "Login Flow",
+      "steps": [
+        "Navigate to /login",
+        "Enter username in username field",
+        "Enter password in password field",
+        "Click Sign In button",
+        "Wait for redirect to home page"
+      ]
+    },
+    {
+      "name": "Browse Men's Collection",
+      "steps": [
+        "Ensure logged in",
+        "Navigate to /men or click 'Men' link in navigation",
+        "View product grid with 6 products",
+        "Each product shows image, category, name, and price"
+      ]
+    },
+    {
+      "name": "Browse Women's Collection",
+      "steps": [
+        "Ensure logged in",
+        "Navigate to /women or click 'Women' link in navigation",
+        "View product grid with 6 products",
+        "Each product shows image, category, name, and price"
+      ]
+    },
+    {
+      "name": "Use Chat Assistant",
+      "steps": [
+        "Ensure logged in and on any authenticated page",
+        "Find floating chat button in bottom right corner",
+        "Click chat button to open chat window",
+        "Type message in input field",
+        "Click send button or press Enter",
+        "Wait for assistant response"
+      ]
+    }
+  ]
+}
+

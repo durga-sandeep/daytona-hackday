@@ -42,20 +42,10 @@ async function automateStyleScout() {
     const taskDescription = `
 Navigate to https://style-sparkle-assistant.lovable.app/
 
-Then perform the following steps:
-1. Find and click on the login button or link
-2. Enter username "admin" in the username/email field
-3. Enter password "admin" in the password field
-4. Click the login/submit button to log in
-5. Wait for the page to load after login
-6. Find and click on "Men" or "Men shopping" navigation link/menu item
-7. Wait for the Men shopping page to load
-8. Find the chat assistant button in the bottom right corner of the page (it should be a fixed position button, typically with a message/chat icon)
-9. Click on the assistant button to open the chat window
-10. Wait for the chat input field to appear
-11. Type "Hi" in the chat input field
-12. Send the message by clicking the send button or pressing Enter
-13. wait for the assistant to respond, note down the response and respond with same message back to the assistant
+Main instruction: Wait atleast 3-5 seconds before performing next step
+
+Chat with assistant (bottom right) after logging in and Type "Hi, can you show me new watch collections for men" in the chat input field
+username: "admin" and password: "admin"
 
 Make sure to wait for each page to fully load before proceeding to the next step.
 `;
